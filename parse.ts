@@ -1,17 +1,5 @@
-const css = `
-.class {
-  color: red;
-  font-size: 14px;
-}
-#id {
-  color: blue;
-  font-size: 12px;
-}
-body {
-  color: yellow;
-  font-size: 16px;
-}
-`;
+import {css, root, matchedRoot, computedRoot} from './db.ts'
+
 interface Declaration {
   [k: string]: string;
 }
@@ -107,76 +95,10 @@ function traverse(root, path) {
     path.pop();
   }
 }
-const root = {
-  tag: 'body',
-  classNames: ['.class'],
-  id: 'k1',
-  children: [
-    {
-      tag: 'p',
-      classNames: ['class'],
-      children: [
-        {
-          tag: 'span',
-          id: 'id',
-          classNames: ['class'],
-          children: []
-        }
-      ]
-    },
-    {
-      tag: 'span',
-      classNames: [],
-      children: []
-    }
-  ]
-};
+
 traverse(root, []);
 
-console.assert(
-  equal(root, {
-    tag: 'body',
-    classNames: ['.class'],
-    id: 'k1',
-    children: [
-      {
-        tag: 'p',
-        classNames: ['class'],
-        children: [
-          {
-            tag: 'span',
-            id: 'id',
-            classNames: ['class'],
-            children: [],
-            matchedRules: [
-              {
-                selector: '.class',
-                declarations: [{ color: 'red' }, { 'font-size': '14px' }]
-              },
-              {
-                selector: '#id',
-                declarations: [{ color: 'blue' }, { 'font-size': '12px' }]
-              }
-            ]
-          }
-        ],
-        matchedRules: [
-          {
-            selector: '.class',
-            declarations: [{ color: 'red' }, { 'font-size': '14px' }]
-          }
-        ]
-      },
-      { tag: 'span', classNames: [], children: [], matchedRules: [] }
-    ],
-    matchedRules: [
-      {
-        selector: 'body',
-        declarations: [{ color: 'yellow' }, { 'font-size': '16px' }]
-      }
-    ]
-  })
-);
+console.assert(equal(root, matchedRoot));
 
 // inline-style? important? complex selector ?
 
@@ -201,56 +123,4 @@ function _getComputedStyle(root) {
   }, {});
 }
 _getComputedStyle(root);
-console.log(
-  equal(root, {
-    tag: 'body',
-    classNames: ['.class'],
-    id: 'k1',
-    children: [
-      {
-        tag: 'p',
-        classNames: ['class'],
-        children: [
-          {
-            tag: 'span',
-            id: 'id',
-            classNames: ['class'],
-            children: [],
-            matchedRules: [
-              {
-                selector: '.class',
-                declarations: [{ color: 'red' }, { 'font-size': '14px' }]
-              },
-              {
-                selector: '#id',
-                declarations: [{ color: 'blue' }, { 'font-size': '12px' }]
-              }
-            ],
-            computedStyle: { color: 'blue', 'font-size': '12px' }
-          }
-        ],
-        matchedRules: [
-          {
-            selector: '.class',
-            declarations: [{ color: 'red' }, { 'font-size': '14px' }]
-          }
-        ],
-        computedStyle: { color: 'red', 'font-size': '14px' }
-      },
-      {
-        tag: 'span',
-        classNames: [],
-        children: [],
-        matchedRules: [],
-        computedStyle: {}
-      }
-    ],
-    matchedRules: [
-      {
-        selector: 'body',
-        declarations: [{ color: 'yellow' }, { 'font-size': '16px' }]
-      }
-    ],
-    computedStyle: { color: 'yellow', 'font-size': '16px' }
-  })
-);
+console.log(equal(root, computedRoot));
