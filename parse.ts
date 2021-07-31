@@ -1,4 +1,4 @@
-import {css, root, matchedRoot, computedRoot} from './db.ts'
+import {css, root, rules, matchedRoot, computedRoot} from './db.ts'
 
 interface Declaration {
   [k: string]: string;
@@ -42,20 +42,7 @@ function getRules(css: string): Rule[] {
 function equal(a, b) {
   return JSON.stringify(a) === JSON.stringify(b);
 }
-const rules = [
-  {
-    selector: '.class',
-    declarations: [{ color: 'red' }, { 'font-size': '14px' }]
-  },
-  {
-    selector: '#id',
-    declarations: [{ color: 'blue' }, { 'font-size': '12px' }]
-  },
-  {
-    selector: 'body',
-    declarations: [{ color: 'yellow' }, { 'font-size': '16px' }]
-  }
-];
+
 
 console.assert(equal(getRules(css), rules));
 
