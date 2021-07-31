@@ -38,6 +38,21 @@ export const root = {
   ]
 };
 
+export const rules = [
+  {
+    selector: '.class',
+    declarations: [{ color: 'red' }, { 'font-size': '14px' }]
+  },
+  {
+    selector: '#id',
+    declarations: [{ color: 'blue' }, { 'font-size': '12px' }]
+  },
+  {
+    selector: 'body',
+    declarations: [{ color: 'yellow' }, { 'font-size': '16px' }]
+  }
+];
+
 export const matchedRoot = {
     tag: 'body',
     classNames: ['.class'],
